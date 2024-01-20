@@ -1,0 +1,19 @@
+a {
+    text-decoration: none;
+}
+
+ol, ul {
+    list-style: none;
+    margin-top: 0;
+        margin-bottom: 0;
+        padding-left: 0;
+        
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+/*--------------------------------*/

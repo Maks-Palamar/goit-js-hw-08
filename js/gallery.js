@@ -88,5 +88,29 @@ images.forEach(function (image) {
     fragment.appendChild(lis);
   });
 
-
 linkList.appendChild(fragment);
+
+const card = document.querySelector(".gallery");
+card.addEventListener("click", openCard);
+
+function openCard(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  console.log(event.target.dataset.source);
+  if (event.target.nodeName === "IMG") {
+    
+    const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`)
+    instance.show()
+
+    document.addEventListener("keydown", function closeOnEscape(event) {
+      if (event.code === "Escape") {
+        instance.close();
+        document.removeEventListener("keydown", closeOnEscape);
+      }
+    });
+  
+  }
+
+}
+
+

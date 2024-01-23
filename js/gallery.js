@@ -90,27 +90,35 @@ images.forEach(function (image) {
 
 linkList.appendChild(fragment);
 
+
 const card = document.querySelector(".gallery");
 card.addEventListener("click", openCard);
+let isModal = false;
 
 function openCard(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  console.log(event.target.dataset.source);
-  if (event.target.nodeName === "IMG") {
+    event.preventDefault();
+    event.stopPropagation();
     
-    const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`)
-    instance.show()
+    if (event.target.nodeName === "IMG") {
+        const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`, {
+            onShow: () => {
+                document.addEventListener("keydown", closeOnEscape);
+                isModal = true;
+                console.log(isModal);
+            },
+            onClose: () => {
+                document.removeEventListener("keydown", closeOnEscape);
+                isModal = false;
+                console.log(isModal);
+            }
+        });
 
-    document.addEventListener("keydown", function closeOnEscape(event) {
-      if (event.code === "Escape") {
-        instance.close();
-        document.removeEventListener("keydown", closeOnEscape);
+        instance.show();
+        function closeOnEscape(event) {
+          if (event.code === "Escape") {
+              instance.close();
+          }
       }
-    });
-  
-  }
-
+    }
 }
-
 
